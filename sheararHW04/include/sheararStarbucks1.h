@@ -31,7 +31,6 @@ public:
 
 class sheararStarbucks1 : public Starbucks{
 public:
-	grid* g;
 	Entry* buildEntry;
 	sheararStarbucks1(void);
 	~sheararStarbucks1(void);
@@ -39,5 +38,5 @@ public:
 	virtual Entry* getNearest(double x, double y);
 	grid* insert(Entry* e, grid* g, double gridLevel);
 	double calculateDistance( double x_, double y_, grid* g);
-	grid* searchGrid(double x, double y, grid* g);
+	grid* searchGrid(double x, double y);
 };

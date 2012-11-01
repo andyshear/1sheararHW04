@@ -1,7 +1,7 @@
 #include "cinder/app/AppBasic.h"
 #include "cinder/gl/gl.h"
 #include "Starbucks.h"
-#include "sheararStarbucks.h"
+#include "sheararStarbucks1.h"
 
 #include <iostream>
 #include <fstream>
@@ -13,15 +13,16 @@ using namespace std;
 
 class sheararHW04App : public AppBasic {
   public:
-	void setup();
-	void mouseDown( MouseEvent event );	
-	void update();
-	void draw();
+	
+	//void mouseDown( MouseEvent event );	
+	//void update();
+	//void draw();
 	int arrlength;
 	int count;
 	Entry* readFile();
 	Entry* entries;
-	
+	sheararStarbucks1 ssb;
+	void setup();
 };
 
 Entry* sheararHW04App::readFile(){
@@ -38,7 +39,7 @@ Entry* sheararHW04App::readFile(){
 	arrlength = 1000;
 	count = 0;
 
-	/*while(!in.eof()){			
+	while(!in.eof()){			
 		string line, identifier_;
 		double xin;
 		double yin;
@@ -50,7 +51,7 @@ Entry* sheararHW04App::readFile(){
 		getline(in,line,'\r');
 		count++;		
 	}
-	arrlength = count;*/
+	arrlength = count;
 	count = 0;
 	entries = new Entry[arrlength];
 	
@@ -77,12 +78,27 @@ Entry* sheararHW04App::readFile(){
 	return entries;
 }
 
+
+//format forked from regojr
 void sheararHW04App::setup()
 {
+	console() << "Reading in locations..." << endl;
 	Entry* entry = readFile();
+
+	console() << "Building K-D Tree..." << endl;
+	ssb.build(entries, arrlength);	
+	console() << "Build Complete." << endl;
+
+	console() << "Running Closest Starbucks Algorithm..." << endl;
+	ssb.getNearest(0.1234567, 0.1234567); //ambiguous current location input for testing purposes
+
+	console() << "Algorithm Complete. " << endl;
+
+	console() << "Results Yielded		" << ssb.getNearest(0.1234567, 0.1234567)->identifier 
+		<< "	as the closest Starbucks to your location." << endl;
 }
 
-void sheararHW04App::mouseDown( MouseEvent event )
+/*void sheararHW04App::mouseDown( MouseEvent event )
 {
 }
 
@@ -97,3 +113,4 @@ void sheararHW04App::draw()
 }
 
 CINDER_APP_BASIC( sheararHW04App, RendererGl )
+*/
